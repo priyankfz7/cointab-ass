@@ -19,6 +19,7 @@ const intUser = {
 
 const SignUp = () => {
   const [user, setUser] = useState(intUser);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +27,7 @@ const SignUp = () => {
   };
 
   const signUp = async (user) => {
+    setLoading(true);
     try {
       let res = await fetch(
         `https://upset-sunglasses-tuna.cyclic.app/users/register`,
@@ -39,6 +41,7 @@ const SignUp = () => {
       );
       const status = res.status;
       res = await res.json();
+      setLoading(false);
       if (status >= 300) {
         alert(res.msg);
       } else {
@@ -98,7 +101,14 @@ const SignUp = () => {
             </Box>
           </Stack>
 
-          <Button width="full" mt={4} type="submit" backgroundColor={"#73A580"}>
+          <Button
+            width="full"
+            mt={4}
+            type="submit"
+            backgroundColor={"#73A580"}
+            isLoading={loading}
+            loadingText="loading ..."
+          >
             Sign Up
           </Button>
         </form>

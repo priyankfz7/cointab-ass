@@ -17,6 +17,7 @@ const intUser = {
 
 const Login = () => {
   const [user, setUser] = useState(intUser);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +25,7 @@ const Login = () => {
   };
 
   const login = async (user) => {
+    setLoading(true);
     try {
       let res = await fetch(
         `https://upset-sunglasses-tuna.cyclic.app/users/login`,
@@ -37,6 +39,7 @@ const Login = () => {
       );
       const status = res.status;
       res = await res.json();
+      setLoading(false);
       if (status >= 300) {
         alert(res.msg);
       } else {
@@ -98,7 +101,14 @@ const Login = () => {
             </Box>
           </Stack>
 
-          <Button width="full" mt={4} type="submit" backgroundColor={"#73A580"}>
+          <Button
+            width="full"
+            mt={4}
+            type="submit"
+            backgroundColor={"#73A580"}
+            isLoading={loading}
+            loadingText="loading ..."
+          >
             Sign In
           </Button>
         </form>
