@@ -25,13 +25,16 @@ const Login = () => {
 
   const login = async (user) => {
     try {
-      let res = await fetch(`http://localhost:8080/users/login`, {
-        method: "POST",
-        body: JSON.stringify(user),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      let res = await fetch(
+        `https://upset-sunglasses-tuna.cyclic.app/users/login`,
+        {
+          method: "POST",
+          body: JSON.stringify(user),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const status = res.status;
       res = await res.json();
       if (status >= 300) {
